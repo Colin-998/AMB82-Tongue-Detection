@@ -1,6 +1,7 @@
 import numpy as np
 import random
 import torch
+torch.set_grad_enabled(False)
 import torch.nn as nn
 
 from models.common import Conv, DWConv
@@ -249,8 +250,8 @@ def attempt_load(weights, map_location=None):
     model = Ensemble()
     for w in weights if isinstance(weights, list) else [weights]:
         attempt_download(w)
-        ckpt = torch.load(w, map_location=map_location)  # load
-        model.append(ckpt['ema' if ckpt.get('ema') else 'model'].float().fuse().eval())  # FP32 model
+        ckpt = torch.load(w, map_location=map_location, weights_only=False)  # load
+        model.append(ckpt['ema' if ckpt.get('ema') else 'model'].float().eval())  # FP32 model
     
     # Compatibility updates
     for m in model.modules():

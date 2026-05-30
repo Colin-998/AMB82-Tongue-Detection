@@ -1,0 +1,5 @@
+train: ./data/images/train
+val: ./data/images/val
+
+nc: 5
+names: ['Mirror-Approximated', 'Thin-White', 'White-Greasy', 'Yellow-Greasy', 'Grey-Black']
