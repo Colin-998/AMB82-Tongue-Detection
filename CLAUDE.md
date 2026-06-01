@@ -110,8 +110,8 @@ ONNX export requires the (commented-out) export extras — install as needed:
   - `fix_load.py` — patches `train.py`/`detect.py` to add `weights_only=False` to `torch.load`
     (needed for newer PyTorch checkpoint security). `fix_test.py` does the same for `test.py`;
     `undo_fix.py` reverts. These mutate source files in place — be aware before re-running.
-- **Stray file:** `data/tongue_v7.yaml.yaml` is a duplicate of `tongue_v7.yaml`; the canonical
-  one is `tongue_v7.yaml`. Don't reference the `.yaml.yaml`.
+- The canonical dataset config is `data/tongue_v7.yaml` — this is the file the scripts
+  reference. (A stray `tongue_v7.yaml.yaml` duplicate previously existed and was removed.)
 - Several source files and notebooks contain **Traditional Chinese (zh-TW) comments** — preserve
   them when editing.
 - **License: GPLv3** (`LICENSE.md`, inherited from YOLOv7).
