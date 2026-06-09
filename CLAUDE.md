@@ -16,9 +16,10 @@ The 5 tongue-coating classes (`data/tongue_v7.yaml`):
 Mirror-Approximated, Thin-White, White-Greasy, Yellow-Greasy, Grey-Black
 ```
 
-> Note: `README.md` is still the **unmodified upstream YOLOv7 README** — treat it as YOLOv7
-> reference material, not as documentation of this project. This file is the project-specific
-> source of truth.
+> Note: the repo has been **trimmed down to the tongue-detection essentials** — the upstream
+> YOLOv7 paper PDF, comparison/benchmark notebooks, demo figures, Triton/AWS/GAE integrations,
+> COCO config, and sample images were removed. `README.md` is now a project-specific README;
+> this file remains the detailed source of truth for contributors.
 
 ## Project-specific vs. upstream
 
@@ -31,9 +32,9 @@ The pieces actually specific to this project are:
 - A handful of one-off helper scripts at the repo root (see below).
 - The ONNX export workflow used to convert weights for the AMB82 NPU.
 
-Everything in `models/`, `utils/`, `cfg/`, `tools/`, `deploy/`, and the main `train.py` /
-`test.py` / `detect.py` / `export.py` scripts is inherited YOLOv7 — when changing them, prefer
-minimal, upstream-compatible edits.
+Everything in `models/`, `utils/`, `cfg/`, `tools/`, and the main `train.py` / `test.py` /
+`detect.py` / `export.py` scripts is inherited YOLOv7 — when changing them, prefer minimal,
+upstream-compatible edits.
 
 ## Repository structure
 
@@ -51,10 +52,9 @@ utils/              # datasets.py, loss.py, general.py (NMS, coords), metrics.py
 cfg/training/       # Model architecture YAMLs for TRAINING (yolov7, -tiny, x, w6, e6, e6e, d6)
 cfg/deploy/         # Same models in DEPLOY form (used after reparameterization)
 cfg/baseline/       # Baseline reference configs
-data/               # tongue_v7.yaml (custom), coco.yaml, hyp.scratch.*.yaml hyperparameters
-tools/              # Export/visualization Jupyter notebooks (ONNX, TensorRT, CoreML, etc.)
-deploy/triton-inference-server/  # NVIDIA Triton serving example (upstream)
-inference/images/   # Sample images for detect.py
+data/               # tongue_v7.yaml (custom), hyp.scratch.*.yaml hyperparameters
+tools/              # Export notebooks: YOLOv7onnx, YOLOv7trt, reparameterization
+tongue_model.zip    # Deliverable: reparameterized best_reparam.onnx + yolov7_tiny.json
 ```
 
 ## Common commands
@@ -79,7 +79,7 @@ python test.py --data data/tongue_v7.yaml --weights runs/train/exp/weights/best.
 
 Inference:
 ```bash
-python detect.py --weights runs/train/exp/weights/best.pt --source inference/images --img 640 --conf-thres 0.25
+python detect.py --weights runs/train/exp/weights/best.pt --source <image/dir/video> --img 640 --conf-thres 0.25
 ```
 
 Reparameterize a trained tiny model (training graph → deploy graph) before export:
